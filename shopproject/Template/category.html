@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block metadiscription %}
+     {% if category %}
+         {{category.discription|truncatewords:155}}
+     {% else %}
+          welcome toksfuasbuyheuqbyvbucnuscbybenfnehfbnr...
+     {% endif %}
+{% endblock %}
+
+{% block title %}
+     {% if category %}
+         {{category.Name}}-SHOP
+     {% else %}
+         see our new -shop
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if category %}
+
+     <div class="container" >
+         <div class="row my_row">
+             <div class="mx-auto  ">
+              <p><a  href="{% url 'shopapp:allproductscategory' %}"><span class="material-symbols-outlined">home</span>Go to Home page</p>
+             </div>
+         </div>
+     </div>
+{% endif %}
+<div class="mx-auto">
+
+     {% if category %}
+     <img class="my_image" src="{{category.image.url}}" alt="{{category.Name}}" >
+</div>
+<br>
+<div>
+     <h2 class="text-center my_title">{{category.Name}}</h2>
+     <p class="text-justify">{{category.discription}}</p>
+</div>
+     {% else %}
+
+<div>
+        <img class="my_image my_image_padding" src="{% static 'img/navbar.png' %}" alt="our product" width="100%;" height="300px;">
+
+</div>
+<br>
+<div>
+    <h2 class="text-center my_title">our products</h2>
+    <p class="text-justify">Elit non laboris commodo labore officia. Magna voluptate duis excepteur duis. Reprehenderit sunt sint minim minim in culpa Lorem nisi commodo ipsum anim aliqua commodo ea nostrud velit pariatur esse deserunt. Ea ipsum consequat exercitation reprehenderit enim voluptate sit.</p>
+
+</div>
+     {% endif %}
+<div>
+<div class="container">
+    <div class="row mx-auto">
+        {% for product in  products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12  col-md-4 col-lg-4">
+            <div class=" card my_product" style="min-width:18rem" >
+
+                <a href="{{product.get_url}}"><img class="my_image" src="{{product.image.url}}" alt="{{product.name}}" width="100px;" height="100px;"></a>
+                <div class="card-body">
+                    <h4 class="text-center my_title">{{product.name}}</h4><hr>
+                    <p class="text-center my_title ">Rs.{{product.price}}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %}active{% endif %}">{{pg}}</a>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+</div>
+{% endblock %}

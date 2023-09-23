@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block metadiscription %}
+     {% if product %}
+         {{product.discription|truncatewords:155}}
+     {% endif %}
+{% endblock %}
+
+{% block title %}
+     {% if product %}
+         {{product.name}}-SHOP
+
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row my_title">
+
+        <p><a href="{% url 'shopapp:allproductscategory'%}"><b>Home</b></a>|<b> <a href="{{product.category.get_url}}">{{product.category}}</b></a>| <b> {{product.name}}</b> </p>
+
+    </div>
+</div>
+<div class="container">
+       <div class="row">
+            <div class="col-md-3">
+            <img class="product_image" src="{{product.image.url}}" alt="{{product.name}}">
+        </div>
+
+           <div class="col-md-3">
+               <h1 class="my_title">{{product.name}}</h1><br>
+               <templates><b>${{product.price}}</b></templates><br>
+               <div class="button_1">
+                   <a class="btn btn-success" href="{% url 'cart_app:add_cart' product.id %}">Add to cart</a>
+
+           </div>
+               </div>
+           <div class="col-md-3">
+               <h2 class="my_title"> Details </h2>
+               <hr>
+               <h3 class="text-justify my_title_product">{{product.discription}}</h3><hr>
+               <h5>Available({{product.stock}}) </h5>
+           </div>
+</div>
+</div>
+
+{% endblock %}
